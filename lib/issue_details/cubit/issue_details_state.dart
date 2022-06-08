@@ -76,5 +76,8 @@ class IssueDetailsFailedToFetch extends IssueDetailsInitial {
   final ComicVineResult result;
 
   @override
+  List<Object> get props => [result];
+
+  @override
   String toString() => 'IssueDetailsFailedToFetch(result: $result)';
 }

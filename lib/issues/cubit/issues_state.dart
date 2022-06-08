@@ -50,6 +50,13 @@ class IssuesFetched extends IssuesState {
 
   /// This will determine the starting index of the next page.
   int get offset => issues.length;
+
+  @override
+  List<Object> get props => [issues, canLoadMore];
+
+  @override
+  String toString() =>
+      'IssuesFetched(issues: $issues, canLoadMore: $canLoadMore)';
 }
 
 /// {@template issues_error}
@@ -63,6 +70,9 @@ class IssuesFailedToFetch extends IssuesState {
 
   /// The result of the error.
   final ComicVineResult result;
+
+  @override
+  List<Object> get props => [result];
 
   @override
   String toString() => 'IssuesFailedToFetch(result: $result)';
