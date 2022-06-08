@@ -201,9 +201,19 @@ class _IssueDetailsFetchedBodyMobile extends StatelessWidget {
       slivers: [
         SliverAppBar(
           expandedHeight: appbarMaxHeight,
+          leading: BackButton(
+            onPressed: () {
+              if (GoRouter.of(context).navigator?.canPop() ?? false) {
+                GoRouter.of(context).pop();
+              } else {
+                GoRouter.of(context).go('/');
+              }
+            },
+          ),
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             titlePadding: EdgeInsets.zero,
+            expandedTitleScale: 1,
             title: _SliverAppBarTitle(issue: issue),
             background: (_imageUrl != null)
                 ? Image.network(
@@ -239,11 +249,9 @@ class _SliverAppBarTitle extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: [
-                0.7,
-                1.0,
-              ],
               colors: [
+                Colors.black54,
+                Colors.transparent,
                 Colors.transparent,
                 Colors.black54,
               ],

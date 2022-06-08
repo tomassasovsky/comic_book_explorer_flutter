@@ -127,7 +127,7 @@ class _IssuesViewBody extends StatelessWidget {
         return;
       }
 
-      GoRouter.of(context).goNamed(
+      GoRouter.of(context).pushNamed(
         'issue-details',
         params: {'id': id},
         extra: {'imageUrl': issue.image?.originalUrl},
