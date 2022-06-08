@@ -35,6 +35,7 @@ class IssuesCubit extends Cubit<IssuesState> {
       );
       if (result.result != ComicVineResult.ok) {
         emit(IssuesFailedToFetch(result.result));
+        return;
       }
 
       emit(
