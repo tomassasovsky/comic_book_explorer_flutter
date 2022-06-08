@@ -19,7 +19,7 @@ class IssuesCubit extends Cubit<IssuesState> {
   Future<void> getIssues() async {
     if (state is IssuesFetching) return;
 
-    emit(const IssuesFetching());
+    _safeEmit(const IssuesFetching());
 
     var offset = 0;
 
@@ -34,11 +34,11 @@ class IssuesCubit extends Cubit<IssuesState> {
         offset: offset,
       );
       if (result.result != ComicVineResult.ok) {
-        emit(IssuesFailedToFetch(result.result));
+        _safeEmit(IssuesFailedToFetch(result.result));
         return;
       }
 
-      emit(
+      _safeEmit(
         IssuesFetched(
           issues: result.items,
           canLoadMore: result.totalResults > result.items.length,
@@ -46,10 +46,15 @@ class IssuesCubit extends Cubit<IssuesState> {
       );
     } catch (_) {
       // TODO(tomassasovsky): Handle different errors
-      emit(
+      _safeEmit(
         const IssuesFailedToFetch(ComicVineResult.unknownError),
       );
     }
+  }
+
+  void _safeEmit(IssuesState state) {
+    if (isClosed) return;
+    emit(state);
   }
 
   final ComicVineApi _comicVineApi;

@@ -66,6 +66,7 @@ class IssuesView extends StatelessWidget {
             );
           } else if (state is IssueDetailsFetched) {
             return _IssueDetailsFetchedBody(
+              issue: state.issue,
               imageUrl: imageUrl,
               characters: state.characters,
               locations: state.locations,
@@ -85,12 +86,14 @@ class IssuesView extends StatelessWidget {
 class _IssueDetailsFetchedBody extends StatelessWidget {
   const _IssueDetailsFetchedBody({
     required this.imageUrl,
+    required this.issue,
     required this.characters,
     required this.locations,
     required this.teams,
   });
 
   final String? imageUrl;
+  final ComicVineIssue issue;
   final Iterable<ComicVineImageResponse> characters;
   final Iterable<ComicVineImageResponse> locations;
   final Iterable<ComicVineImageResponse> teams;
@@ -125,7 +128,7 @@ class _IssueDetailsFetchedBody extends StatelessWidget {
           return Row(
             children: [
               Expanded(
-                child: Column(
+                child: ListView(
                   children: children,
                 ),
               ),
@@ -144,6 +147,9 @@ class _IssueDetailsFetchedBody extends StatelessWidget {
             SliverAppBar(
               expandedHeight: constraints.maxHeight * 0.8,
               flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                titlePadding: EdgeInsets.zero,
+                title: _SliverAppBarTitle(issue: issue),
                 background: (_imageUrl != null)
                     ? Image.network(
                         _imageUrl,
@@ -160,6 +166,46 @@ class _IssueDetailsFetchedBody extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _SliverAppBarTitle extends StatelessWidget {
+  const _SliverAppBarTitle({
+    required this.issue,
+  });
+
+  final ComicVineIssue issue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [
+                0.7,
+                1.0,
+              ],
+              colors: [
+                Colors.transparent,
+                Colors.black54,
+              ],
+            ),
+          ),
+          child: SizedBox.expand(),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Text(
+            '${issue.name ?? ''} #${issue.issueNumber ?? ''}',
+          ),
+        ),
+      ],
     );
   }
 }

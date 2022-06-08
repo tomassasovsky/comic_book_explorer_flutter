@@ -36,10 +36,14 @@ class IssueDetailsFetching extends IssueDetailsInitial {
 class IssueDetailsFetched extends IssueDetailsInitial {
   /// {@macro issue_details_fetched}
   const IssueDetailsFetched(
+    this.issue,
     this.characters,
     this.locations,
     this.teams,
   );
+
+  /// The issue itself.
+  final ComicVineIssue issue;
 
   /// The characters of the issue.
   final List<ComicVineImageResponse> characters;
@@ -52,6 +56,7 @@ class IssueDetailsFetched extends IssueDetailsInitial {
 
   @override
   List<Object> get props => [
+        issue,
         characters,
         locations,
         teams,

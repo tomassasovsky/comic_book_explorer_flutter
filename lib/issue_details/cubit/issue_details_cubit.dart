@@ -57,8 +57,9 @@ class IssueDetailsCubit extends Cubit<IssueDetailsState> {
         teamsFetcher,
       );
 
-      emit(
+      _safeEmit(
         IssueDetailsFetched(
+          issue,
           charactersResponse
               .map((characters) => characters.items.first)
               .toList(),
@@ -68,12 +69,17 @@ class IssueDetailsCubit extends Cubit<IssueDetailsState> {
       );
     } catch (e) {
       // TODO(tomassasovsky): handle error
-      emit(
+      _safeEmit(
         const IssueDetailsFailedToFetch(
           ComicVineResult.unknownError,
         ),
       );
     }
+  }
+
+  void _safeEmit(IssueDetailsState state) {
+    if (isClosed) return;
+    emit(state);
   }
 
   final ComicVineApi _comicVineApi;

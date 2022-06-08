@@ -153,7 +153,7 @@ class _IssuesViewBody extends StatelessWidget {
         if (selectedView == IssuesViewType.grid) {
           // this keeps the grid from being 1 to 4 columns wide,
           // depending on the screen size
-          final horizontalCount = (constraints.maxWidth ~/ 350).clamp(1, 4);
+          final horizontalCount = (constraints.maxWidth ~/ 350).clamp(2, 4);
 
           return GridView.count(
             crossAxisCount: horizontalCount,
