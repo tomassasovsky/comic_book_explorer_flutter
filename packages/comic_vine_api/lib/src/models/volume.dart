@@ -53,17 +53,6 @@ class ComicVineVolume extends Equatable {
       };
 
   @override
-  List<Object?> get props {
-    return [
-      apiDetailUrl,
-      id,
-      name,
-      siteDetailUrl,
-      count,
-    ];
-  }
-
-  @override
   String toString() {
     return '''
     IssueVolume(
@@ -74,5 +63,16 @@ class ComicVineVolume extends Equatable {
       count: $count
     )
     ''';
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      apiDetailUrl,
+      id,
+      name,
+      siteDetailUrl,
+      count,
+    ];
   }
 }

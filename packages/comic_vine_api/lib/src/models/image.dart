@@ -45,10 +45,7 @@ class ComicVineImageResponse extends Equatable {
   final String? name;
 
   @override
-  List<Object?> get props => [
-        image,
-        name,
-      ];
+  List<Object?> get props => [image, name];
 }
 
 /// {@template comic_vine_image}
@@ -116,22 +113,6 @@ class ComicVineImage extends Equatable {
   final String? imageTags;
 
   @override
-  List<Object?> get props {
-    return [
-      iconUrl,
-      mediumUrl,
-      screenUrl,
-      screenLargeUrl,
-      smallUrl,
-      superUrl,
-      thumbUrl,
-      tinyUrl,
-      originalUrl,
-      imageTags,
-    ];
-  }
-
-  @override
   String toString() {
     return '''
     IssueImage(
@@ -147,5 +128,21 @@ class ComicVineImage extends Equatable {
       imageTags: $imageTags
     )
     ''';
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      iconUrl,
+      mediumUrl,
+      screenUrl,
+      screenLargeUrl,
+      smallUrl,
+      superUrl,
+      thumbUrl,
+      tinyUrl,
+      originalUrl,
+      imageTags,
+    ];
   }
 }

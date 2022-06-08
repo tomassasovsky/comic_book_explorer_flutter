@@ -118,28 +118,6 @@ class ComicVineIssue extends Equatable {
   final List<ComicVineVolume>? teamCredits;
 
   @override
-  List<Object?> get props {
-    return [
-      apiDetailUrl,
-      coverDate,
-      dateAdded,
-      dateLastUpdated,
-      description,
-      hasStaffReview,
-      id,
-      image,
-      issueNumber,
-      name,
-      siteDetailUrl,
-      storeDate,
-      volume,
-      characterCredits,
-      locationCredits,
-      teamCredits,
-    ];
-  }
-
-  @override
   String toString() {
     return '''
     ComicVineIssue(
@@ -161,5 +139,27 @@ class ComicVineIssue extends Equatable {
       teamCredits: $teamCredits
     )
     ''';
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      apiDetailUrl,
+      coverDate,
+      dateAdded,
+      dateLastUpdated,
+      description,
+      hasStaffReview,
+      id,
+      image,
+      issueNumber,
+      name,
+      siteDetailUrl,
+      storeDate,
+      volume,
+      characterCredits,
+      locationCredits,
+      teamCredits,
+    ];
   }
 }

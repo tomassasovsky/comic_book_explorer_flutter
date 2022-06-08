@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:comic_vine_api/src/models/generic_response_result.dart';
 import 'package:equatable/equatable.dart';
 
