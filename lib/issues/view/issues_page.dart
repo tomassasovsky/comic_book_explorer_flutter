@@ -61,7 +61,7 @@ class _IssuesViewState extends State<IssuesView> {
           if (state is IssuesFailedToFetch) {
             return Center(
               child: Text(
-                context.l10n.failedToFetchIssues,
+                '${context.l10n.failedToFetchIssueDetails}: ${state.error}',
               ),
             );
           } else if (state is IssuesFetched) {
@@ -138,7 +138,7 @@ class _IssuesViewBody extends StatelessWidget {
         return;
       }
 
-      GoRouter.of(context).pushNamed(
+      GoRouter.of(context).goNamed(
         'issue-details',
         params: {'id': id},
         extra: {'imageUrl': issue.image?.originalUrl},

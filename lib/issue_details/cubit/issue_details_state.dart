@@ -75,14 +75,21 @@ class IssueDetailsFetched extends IssueDetailsInitial {
 class IssueDetailsFailedToFetch extends IssueDetailsInitial {
   /// {@macro issue_details_error}
   /// The error that occurred.
-  const IssueDetailsFailedToFetch(this.result);
+  const IssueDetailsFailedToFetch(
+    this.result,
+    this.error,
+  );
 
   /// The result of the error.
   final ComicVineResult result;
 
-  @override
-  List<Object> get props => [result];
+  /// The result of the error.
+  final String error;
 
   @override
-  String toString() => 'IssueDetailsFailedToFetch(result: $result)';
+  List<Object> get props => [result, error];
+
+  @override
+  String toString() =>
+      'IssueDetailsFailedToFetch(result: $result, error: $error)';
 }

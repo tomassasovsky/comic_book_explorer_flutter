@@ -3,6 +3,7 @@ import 'package:comic_book_explorer/l10n/l10n.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// {@template issue_details_page}
 /// The page that displays an issue's details.
@@ -61,13 +62,13 @@ class IssuesView extends StatelessWidget {
           if (state is IssueDetailsFailedToFetch) {
             return Center(
               child: Text(
-                context.l10n.failedToFetchIssueDetails,
+                '${context.l10n.failedToFetchIssueDetails}: ${state.error}',
               ),
             );
           } else if (state is IssueDetailsFetched) {
             return _IssueDetailsFetchedBody(
               issue: state.issue,
-              imageUrl: imageUrl,
+              imageUrl: state.issue.image?.originalUrl ?? imageUrl,
               characters: state.characters,
               locations: state.locations,
               teams: state.teams,
@@ -156,11 +157,13 @@ class _IssueDetailsFetchedBodyWeb extends StatelessWidget {
         Expanded(
           child: ListView(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: BackButton(),
+                  padding: const EdgeInsets.all(8),
+                  child: BackButton(
+                    onPressed: () => GoRouter.of(context).go('/'),
+                  ),
                 ),
               ),
               ...children,

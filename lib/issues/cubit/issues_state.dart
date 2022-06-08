@@ -66,13 +66,22 @@ class IssuesFetched extends IssuesState {
 class IssuesFailedToFetch extends IssuesState {
   /// {@macro issues_error}
   /// The error that occurred.
-  const IssuesFailedToFetch(this.result);
+  const IssuesFailedToFetch(
+    this.result,
+    this.error,
+  );
 
   /// The result of the error.
   final ComicVineResult result;
 
+  /// The error that occurred.
+  final String error;
+
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [
+        result,
+        error,
+      ];
 
   @override
   String toString() => 'IssuesFailedToFetch(result: $result)';

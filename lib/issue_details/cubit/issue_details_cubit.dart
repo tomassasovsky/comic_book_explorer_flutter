@@ -23,6 +23,16 @@ class IssueDetailsCubit extends Cubit<IssueDetailsState> {
       if (state is IssueDetailsFetching) return;
 
       final response = await _comicVineApi.getIssueDetails(_issueId);
+      if (response.result != ComicVineResult.ok) {
+        emit(
+          IssueDetailsFailedToFetch(
+            response.result,
+            response.error,
+          ),
+        );
+        return;
+      }
+
       final issue = response.items.first;
 
       final charactersFetcher =
@@ -68,10 +78,10 @@ class IssueDetailsCubit extends Cubit<IssueDetailsState> {
         ),
       );
     } catch (e) {
-      // TODO(tomassasovsky): handle error
       _safeEmit(
-        const IssueDetailsFailedToFetch(
+        IssueDetailsFailedToFetch(
           ComicVineResult.unknownError,
+          e.toString(),
         ),
       );
     }

@@ -34,7 +34,12 @@ class IssuesCubit extends Cubit<IssuesState> {
         offset: offset,
       );
       if (result.result != ComicVineResult.ok) {
-        _safeEmit(IssuesFailedToFetch(result.result));
+        _safeEmit(
+          IssuesFailedToFetch(
+            result.result,
+            result.error,
+          ),
+        );
         return;
       }
 
@@ -44,10 +49,12 @@ class IssuesCubit extends Cubit<IssuesState> {
           canLoadMore: result.totalResults > result.items.length,
         ),
       );
-    } catch (_) {
-      // TODO(tomassasovsky): Handle different errors
+    } catch (e) {
       _safeEmit(
-        const IssuesFailedToFetch(ComicVineResult.unknownError),
+        IssuesFailedToFetch(
+          ComicVineResult.unknownError,
+          e.toString(),
+        ),
       );
     }
   }
