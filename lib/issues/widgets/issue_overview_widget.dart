@@ -53,7 +53,7 @@ class IssueOverviewWidget extends StatelessWidget {
         children: [
           if (imageUrl != null)
             Flexible(
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () => onTap?.call(issue),
                 child: Image.network(imageUrl),
               ),
@@ -83,7 +83,7 @@ class IssueOverviewWidget extends StatelessWidget {
       children: [
         if (imageUrl != null)
           Flexible(
-            child: GestureDetector(
+            child: InkWell(
               onTap: () => onTap?.call(issue),
               child: Image.network(imageUrl),
             ),

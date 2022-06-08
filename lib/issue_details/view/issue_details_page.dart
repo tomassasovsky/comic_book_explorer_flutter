@@ -105,67 +105,117 @@ class _IssueDetailsFetchedBody extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final children = [
-          if (characters.isNotEmpty)
-            IssueDetailsSectionWidget(
-              items: characters,
-              title: context.l10n.characters,
-            ),
-          if (locations.isNotEmpty)
-            if (locations.isNotEmpty)
-              IssueDetailsSectionWidget(
-                items: locations,
-                title: context.l10n.locations,
-              ),
-          if (teams.isNotEmpty)
-            IssueDetailsSectionWidget(
-              items: teams,
-              title: context.l10n.teams,
-            ),
+          IssueDetailsSectionWidget(
+            items: characters,
+            title: context.l10n.characters,
+          ),
+          IssueDetailsSectionWidget(
+            items: locations,
+            title: context.l10n.locations,
+          ),
+          IssueDetailsSectionWidget(
+            items: teams,
+            title: context.l10n.teams,
+          ),
         ];
 
         // web or desktop layout
         if (constraints.maxWidth > 600) {
-          return Row(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: children,
-                ),
-              ),
-              if (_imageUrl != null)
-                Image.network(
-                  _imageUrl,
-                  fit: BoxFit.cover,
-                ),
-            ],
+          return _IssueDetailsFetchedBodyWeb(
+            imageUrl: _imageUrl,
+            children: children,
           );
         }
 
         // mobile layout
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: constraints.maxHeight * 0.8,
-              flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                titlePadding: EdgeInsets.zero,
-                title: _SliverAppBarTitle(issue: issue),
-                background: (_imageUrl != null)
-                    ? Image.network(
-                        _imageUrl,
-                        fit: BoxFit.cover,
-                      )
-                    : const SizedBox.shrink(),
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                children,
-              ),
-            ),
-          ],
+        return _IssueDetailsFetchedBodyMobile(
+          issue: issue,
+          imageUrl: _imageUrl,
+          appbarMaxHeight: constraints.maxHeight * 0.8,
+          children: children,
         );
       },
+    );
+  }
+}
+
+class _IssueDetailsFetchedBodyWeb extends StatelessWidget {
+  const _IssueDetailsFetchedBodyWeb({
+    required this.children,
+    required this.imageUrl,
+  });
+
+  final List<IssueDetailsSectionWidget> children;
+  final String? imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    final _imageUrl = imageUrl;
+    return Row(
+      children: [
+        Expanded(
+          child: ListView(
+            children: [
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: BackButton(),
+                ),
+              ),
+              ...children,
+            ],
+          ),
+        ),
+        if (_imageUrl != null)
+          Image.network(
+            _imageUrl,
+            fit: BoxFit.cover,
+          ),
+      ],
+    );
+  }
+}
+
+class _IssueDetailsFetchedBodyMobile extends StatelessWidget {
+  const _IssueDetailsFetchedBodyMobile({
+    required this.issue,
+    required this.children,
+    required this.imageUrl,
+    required this.appbarMaxHeight,
+  });
+
+  final ComicVineIssue issue;
+  final List<IssueDetailsSectionWidget> children;
+  final String? imageUrl;
+  final double appbarMaxHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    final _imageUrl = imageUrl;
+
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          expandedHeight: appbarMaxHeight,
+          flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
+            titlePadding: EdgeInsets.zero,
+            title: _SliverAppBarTitle(issue: issue),
+            background: (_imageUrl != null)
+                ? Image.network(
+                    _imageUrl,
+                    fit: BoxFit.cover,
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            children,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -180,7 +230,6 @@ class _SliverAppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      fit: StackFit.expand,
       children: [
         const DecoratedBox(
           decoration: BoxDecoration(
