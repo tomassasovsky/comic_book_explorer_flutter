@@ -1,9 +1,9 @@
 import 'package:comic_book_explorer/issues/issues.dart';
-import 'package:comic_book_explorer/issues/widgets/issue_overview_widget.dart';
 import 'package:comic_book_explorer/l10n/l10n.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// {@template issues_page}
 /// The page that displays the issues in a paginated manner.
@@ -129,6 +129,31 @@ class _IssuesViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onTap(ComicVineIssue issue) {
+      String? id;
+
+      // initially, the apiDetailUrl looks like this:
+      // https://comicvine.gamespot.com/api/issue/4000-12345/
+      // we want to grab what's after the /issue/
+      // this is the issue id
+
+      final apiDetailUrl = issue.apiDetailUrl;
+      if (apiDetailUrl == null) return;
+
+      if (apiDetailUrl.endsWith('/')) {
+        final splitUrl = apiDetailUrl.split('/')..removeLast();
+        id = splitUrl.last;
+      }
+
+      if (id == null) return;
+
+      GoRouter.of(context).pushNamed(
+        'issue-details',
+        params: {'id': id},
+        extra: {'imageUrl': issue.image?.originalUrl},
+      );
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final horizontalPadding = constraints.maxWidth * 0.05;
@@ -147,7 +172,14 @@ class _IssuesViewBody extends StatelessWidget {
               horizontal: horizontalPadding,
               vertical: verticalPadding,
             ),
-            children: issues.map(IssueOverviewWidget.gridView).toList(),
+            children: issues
+                .map(
+                  (issue) => IssueOverviewWidget.gridView(
+                    issue,
+                    onTap: onTap,
+                  ),
+                )
+                .toList(),
           );
         }
 
@@ -159,7 +191,10 @@ class _IssuesViewBody extends StatelessWidget {
             return SizedBox(
               // by these values, 2 items will be displayed at all times
               height: constraints.maxHeight * 0.4,
-              child: IssueOverviewWidget.listView(issue),
+              child: IssueOverviewWidget.listView(
+                issue,
+                onTap: onTap,
+              ),
             );
           },
           padding: EdgeInsets.symmetric(

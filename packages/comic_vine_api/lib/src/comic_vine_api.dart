@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:comic_vine_api/src/models/generic_response.dart';
-import 'package:comic_vine_api/src/models/issues.dart';
+import 'package:comic_vine_api/src/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -53,6 +52,58 @@ class ComicVineApi {
 
     final result = ComicVineGenericResponse<ComicVineIssue>.fromJson(
       ComicVineIssue.fromMap,
+      response.body,
+    );
+
+    return result;
+  }
+
+  /// Gets a list of Comic Vine issues.
+  Future<ComicVineGenericResponse<ComicVineIssue>> getIssueDetails(
+    String issueId,
+  ) async {
+    assert(issueId.isNotEmpty, 'issueId cannot be empty');
+
+    final url = Uri.https(
+      authority,
+      '/api/issue/$issueId',
+      <String, String>{
+        'format': 'json',
+        'api_key': apiKey,
+      },
+    );
+
+    final response = await _httpClient.get(url);
+
+    final result = ComicVineGenericResponse<ComicVineIssue>.fromJson(
+      ComicVineIssue.fromMap,
+      response.body,
+    );
+
+    return result;
+  }
+
+  /// Gets the list of images for a given character.
+  Future<ComicVineGenericResponse<ComicVineImageResponse>> getImage(
+    ComicVineImageResource imageResource,
+    String id,
+  ) async {
+    assert(id.isNotEmpty, 'id cannot be empty');
+
+    final url = Uri.https(
+      authority,
+      '/api/${imageResource.name}/$id',
+      <String, String>{
+        'format': 'json',
+        'api_key': apiKey,
+        'field_list': 'image,name',
+      },
+    );
+
+    final response = await _httpClient.get(url);
+
+    final result = ComicVineGenericResponse<ComicVineImageResponse>.fromJson(
+      ComicVineImageResponse.fromMap,
       response.body,
     );
 

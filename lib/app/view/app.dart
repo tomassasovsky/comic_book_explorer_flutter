@@ -1,3 +1,4 @@
+import 'package:comic_book_explorer/issue_details/view/issue_details_page.dart';
 import 'package:comic_book_explorer/issues/issues.dart';
 import 'package:comic_book_explorer/l10n/l10n.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
@@ -73,7 +74,27 @@ class _AppState extends State<App> {
       routes: <GoRoute>[
         GoRoute(
           path: '/',
+          name: 'home',
           builder: (_, state) => IssuesPage(key: state.pageKey),
+        ),
+        GoRoute(
+          path: '/issue/:id',
+          name: 'issue-details',
+          builder: (_, state) {
+            final id = state.params['id'];
+            String? imageUrl;
+            if (id == null) throw ArgumentError('Missing issue id');
+            try {
+              final extra = state.extra as Map<String, dynamic>?;
+              imageUrl = extra?['imageUrl'] as String?;
+            } catch (_) {}
+
+            return IssueDetailsPage(
+              key: state.pageKey,
+              issueId: id,
+              imageUrl: imageUrl,
+            );
+          },
         ),
       ],
     );

@@ -15,5 +15,21 @@
     "failedToFetchIssues": "Failed to fetch issues",
     "@failedToFetchIssues": {
         "description": "Text shown when the list of issues fails to load"
+    },
+    "failedToFetchIssueDetails": "Failed to fetch the details of the issue",
+    "@failedToFetchIssueDetails": {
+        "description": "Text shown when the details of an issue fails to load"
+    },
+    "characters": "Characters",
+    "@characters": {
+        "description": "Text shown for the Characters section in an issue details page"
+    },
+    "locations": "Locations",
+    "@locations": {
+        "description": "Text shown for the Locations section in an issue details page"
+    },
+    "teams": "Teams",
+    "@teams": {
+        "description": "Text shown for the Teams section in an issue details page"
     }
 }
