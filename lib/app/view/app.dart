@@ -1,26 +1,81 @@
-import 'package:comic_book_explorer/counter/counter.dart';
+import 'package:comic_book_explorer/issues/issues.dart';
 import 'package:comic_book_explorer/l10n/l10n.dart';
+import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
+/// {@template app}
+/// The entry point for the application.
+/// {@endtemplate}
+class App extends StatefulWidget {
+  /// {@macro app}
+  const App({
+    super.key,
+    required this.apiClient,
+  });
+
+  /// The API client used to fetch data from the Comic Vine API.
+  final ComicVineApi apiClient;
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  late final GoRouter goRouter;
+
+  @override
+  void initState() {
+    super.initState();
+    goRouter = getRouter();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
+    return RepositoryProvider(
+      create: (context) => widget.apiClient,
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routeInformationParser: goRouter.routeInformationParser,
+        routerDelegate: goRouter.routerDelegate,
+        theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xfff2f2f2),
+          appBarTheme: const AppBarTheme(
+            color: Color(0xfff2f2f2),
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
+            elevation: 1,
+          ),
+          chipTheme: const ChipThemeData(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            backgroundColor: Color(0xfff2f2f2),
+            selectedColor: Colors.lightGreen,
+            labelStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
       ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
+    );
+  }
+
+  GoRouter getRouter() {
+    return GoRouter(
+      urlPathStrategy: UrlPathStrategy.path,
+      routes: <GoRoute>[
+        GoRoute(
+          path: '/',
+          builder: (_, state) => IssuesPage(key: state.pageKey),
+        ),
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
     );
   }
 }

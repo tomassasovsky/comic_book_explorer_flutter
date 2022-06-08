@@ -1,0 +1,19 @@
+name: comic_vine_api
+description: A wrapper for the Comic Vine RestAPI.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  collection: ^1.16.0
+  equatable: ^2.0.3
+  http: ^0.13.4
+  meta: ^1.7.0
+
+dev_dependencies:
+  coverage: ^1.1.0
+  mocktail: ^0.3.0
+  test: ^1.19.2
+  very_good_analysis: ^3.0.0

@@ -1,7 +1,19 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+    "latestIssuesTitle": "Latest Issues",
+    "@latestIssuesTitle": {
+        "description": "Text shown at the top of the Issues page"
+    },
+    "listViewType": "List",
+    "@listViewType": {
+        "description": "Type of view to use for the list of issues"
+    },
+    "gridViewType": "Grid",
+    "@gridViewType": {
+        "description": "Type of view to use for the list of issues"
+    },
+    "failedToFetchIssues": "Failed to fetch issues",
+    "@failedToFetchIssues": {
+        "description": "Text shown when the list of issues fails to load"
     }
 }
