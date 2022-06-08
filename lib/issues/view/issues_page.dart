@@ -135,6 +135,8 @@ class _IssuesViewBody extends StatelessWidget {
         final verticalPadding = constraints.maxHeight * 0.05;
 
         if (selectedView == IssuesViewType.grid) {
+          // this keeps the grid from being 1 to 4 columns wide,
+          // depending on the screen size
           final horizontalCount = (constraints.maxWidth ~/ 350).clamp(1, 4);
 
           return GridView.count(
@@ -150,16 +152,12 @@ class _IssuesViewBody extends StatelessWidget {
         }
 
         return ListView.separated(
-          separatorBuilder: (_, __) {
-            return SizedBox(
-              height: verticalPadding,
-              child: const Divider(),
-            );
-          },
+          separatorBuilder: (_, __) => Divider(height: verticalPadding),
           itemCount: issues.length,
           itemBuilder: (context, index) {
             final issue = issues[index];
             return SizedBox(
+              // by these values, 2 items will be displayed at all times
               height: constraints.maxHeight * 0.4,
               child: IssueOverviewWidget.listView(issue),
             );
