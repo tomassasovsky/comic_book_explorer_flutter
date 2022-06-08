@@ -1,9 +1,10 @@
 import 'package:comic_book_explorer/issues/issues.dart';
-import 'package:comic_book_explorer/issues/widgets/issue_overview_widget.dart';
 import 'package:comic_book_explorer/l10n/l10n.dart';
+import 'package:comic_book_explorer/utils/utils.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 /// {@template issues_page}
 /// The page that displays the issues in a paginated manner.
@@ -129,6 +130,21 @@ class _IssuesViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onTap(ComicVineIssue issue) {
+      final id = issue.apiDetailUrl?.comicVineId;
+      // ignore: lines_longer_than_80_chars
+      // TODO(tomassasovsky): notify the user that the issue ID has not been found
+      if (id == null) {
+        return;
+      }
+
+      GoRouter.of(context).pushNamed(
+        'issue-details',
+        params: {'id': id},
+        extra: {'imageUrl': issue.image?.originalUrl},
+      );
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final horizontalPadding = constraints.maxWidth * 0.05;
@@ -137,7 +153,7 @@ class _IssuesViewBody extends StatelessWidget {
         if (selectedView == IssuesViewType.grid) {
           // this keeps the grid from being 1 to 4 columns wide,
           // depending on the screen size
-          final horizontalCount = (constraints.maxWidth ~/ 350).clamp(1, 4);
+          final horizontalCount = (constraints.maxWidth ~/ 350).clamp(2, 4);
 
           return GridView.count(
             crossAxisCount: horizontalCount,
@@ -147,7 +163,14 @@ class _IssuesViewBody extends StatelessWidget {
               horizontal: horizontalPadding,
               vertical: verticalPadding,
             ),
-            children: issues.map(IssueOverviewWidget.gridView).toList(),
+            children: issues
+                .map(
+                  (issue) => IssueOverviewWidget.gridView(
+                    issue,
+                    onTap: onTap,
+                  ),
+                )
+                .toList(),
           );
         }
 
@@ -159,7 +182,10 @@ class _IssuesViewBody extends StatelessWidget {
             return SizedBox(
               // by these values, 2 items will be displayed at all times
               height: constraints.maxHeight * 0.4,
-              child: IssueOverviewWidget.listView(issue),
+              child: IssueOverviewWidget.listView(
+                issue,
+                onTap: onTap,
+              ),
             );
           },
           padding: EdgeInsets.symmetric(

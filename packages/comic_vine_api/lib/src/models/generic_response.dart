@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:comic_vine_api/src/models/generic_response_result.dart';
 import 'package:equatable/equatable.dart';
 
@@ -29,7 +30,12 @@ class ComicVineGenericResponse<T> extends Equatable {
     map = map.cast<String, dynamic>();
 
     // extract the results from the map
-    final items = (map['results'] as List).cast<Map>();
+    late final List<Map> items;
+    if (map['results'] is List) {
+      items = (map['results'] as List).cast<Map>();
+    } else if (map['results'] is Map) {
+      items = <Map>[map['results'] as Map];
+    }
 
     // parse the results into a list of objects
     final parsedItems = items.map(itemParser).toList();

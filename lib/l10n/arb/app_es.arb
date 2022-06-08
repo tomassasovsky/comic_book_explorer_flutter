@@ -15,5 +15,21 @@
     "failedToFetchIssues": "No se pudieron obtener las publicaciones",
     "@failedToFetchIssues": {
         "description": "Texto que se muestra cuando no se pudieron obtener las publicaciones"
+    },
+    "failedToFetchIssueDetails": "No se pudieron obtener los detalles de la publicación",
+    "@failedToFetchIssueDetails": {
+        "description": "Texto que se muestra cuando no se pudieron obtener los detalles de la publicación"
+    },
+    "characters": "Personajes",
+    "@characters": {
+        "description": "El texto que se muestra para la sección de los personajes en la página de detalles de la publicación"
+    },
+    "locations": "Ubicaciones",
+    "@locations": {
+        "description": "El texto que se muestra para la sección de las ubicaciones en la página de detalles de la publicación"
+    },
+    "teams": "Equipos",
+    "@teams": {
+        "description": "El texto que se muestra para la sección de los equipos en la página de detalles de la publicación"
     }
 }

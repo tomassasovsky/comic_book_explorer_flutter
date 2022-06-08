@@ -21,12 +21,14 @@ class IssueOverviewWidget extends StatelessWidget {
   /// {@macro issue_overview_widget}
   const IssueOverviewWidget.listView(
     this.issue, {
+    this.onTap,
     super.key,
   }) : _viewType = IssuesViewType.list;
 
   /// {@macro issue_overview_widget}
   const IssueOverviewWidget.gridView(
     this.issue, {
+    this.onTap,
     super.key,
   }) : _viewType = IssuesViewType.grid;
 
@@ -35,6 +37,9 @@ class IssueOverviewWidget extends StatelessWidget {
 
   /// The issue to display.
   final IssuesViewType _viewType;
+
+  /// The callback to be called when the picture of the issue is tapped.
+  final Function(ComicVineIssue issue)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,10 @@ class IssueOverviewWidget extends StatelessWidget {
         children: [
           if (imageUrl != null)
             Flexible(
-              child: Image.network(imageUrl),
+              child: GestureDetector(
+                onTap: () => onTap?.call(issue),
+                child: Image.network(imageUrl),
+              ),
             ),
           Flexible(
             child: Column(
@@ -75,7 +83,10 @@ class IssueOverviewWidget extends StatelessWidget {
       children: [
         if (imageUrl != null)
           Flexible(
-            child: Image.network(imageUrl),
+            child: GestureDetector(
+              onTap: () => onTap?.call(issue),
+              child: Image.network(imageUrl),
+            ),
           ),
         Text(
           name,

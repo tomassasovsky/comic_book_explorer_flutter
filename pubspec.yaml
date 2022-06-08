@@ -10,8 +10,6 @@ dependencies:
   bloc: ^8.0.3
   comic_vine_api:
     path: packages/comic_vine_api
-  dotenv: ^4.0.1
-  env_flutter: ^0.1.4
   equatable: ^2.0.3
   flutter:
     sdk: flutter
