@@ -2,6 +2,7 @@ import 'package:comic_book_explorer/issues/issues.dart';
 import 'package:comic_book_explorer/l10n/l10n.dart';
 import 'package:comic_book_explorer/utils/utils.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -83,34 +84,22 @@ class _IssuesViewState extends State<IssuesView> {
     return AppBar(
       title: Text(context.l10n.latestIssuesTitle),
       actions: <Widget>[
-        ChoiceChip(
-          label: Text(context.l10n.listViewType),
-          avatar: const Icon(
-            Icons.list,
-            color: Colors.black,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: CupertinoSlidingSegmentedControl<IssuesViewType>(
+            groupValue: selectedView,
+            onValueChanged: (value) {
+              if (value == null) return;
+              setState(() {
+                selectedView = value;
+              });
+            },
+            children: const <IssuesViewType, Widget>{
+              IssuesViewType.list: Icon(Icons.list, color: Colors.black54),
+              IssuesViewType.grid: Icon(Icons.grid_on, color: Colors.black54),
+            },
           ),
-          selected: selectedView == IssuesViewType.list,
-          onSelected: (_) {
-            setState(() {
-              selectedView = IssuesViewType.list;
-            });
-          },
         ),
-        const SizedBox(width: 16),
-        ChoiceChip(
-          label: Text(context.l10n.gridViewType),
-          avatar: const Icon(
-            Icons.grid_3x3,
-            color: Colors.black,
-          ),
-          selected: selectedView == IssuesViewType.grid,
-          onSelected: (_) {
-            setState(() {
-              selectedView = IssuesViewType.grid;
-            });
-          },
-        ),
-        const SizedBox(width: 16),
       ],
     );
   }
