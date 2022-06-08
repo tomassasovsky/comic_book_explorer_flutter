@@ -120,7 +120,7 @@ class _IssueDetailsFetchedBody extends StatelessWidget {
         ];
 
         // web or desktop layout
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > 900) {
           return _IssueDetailsFetchedBodyWeb(
             imageUrl: _imageUrl,
             children: children,
