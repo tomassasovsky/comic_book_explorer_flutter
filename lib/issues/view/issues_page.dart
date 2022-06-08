@@ -1,5 +1,6 @@
 import 'package:comic_book_explorer/issues/issues.dart';
 import 'package:comic_book_explorer/l10n/l10n.dart';
+import 'package:comic_book_explorer/utils/utils.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -130,22 +131,12 @@ class _IssuesViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onTap(ComicVineIssue issue) {
-      String? id;
-
-      // initially, the apiDetailUrl looks like this:
-      // https://comicvine.gamespot.com/api/issue/4000-12345/
-      // we want to grab what's after the /issue/
-      // this is the issue id
-
-      final apiDetailUrl = issue.apiDetailUrl;
-      if (apiDetailUrl == null) return;
-
-      if (apiDetailUrl.endsWith('/')) {
-        final splitUrl = apiDetailUrl.split('/')..removeLast();
-        id = splitUrl.last;
+      final id = issue.apiDetailUrl?.comicVineId;
+      // ignore: lines_longer_than_80_chars
+      // TODO(tomassasovsky): notify the user that the issue ID has not been found
+      if (id == null) {
+        return;
       }
-
-      if (id == null) return;
 
       GoRouter.of(context).pushNamed(
         'issue-details',

@@ -1,4 +1,4 @@
-import 'package:comic_book_explorer/utils/maybe_at.dart';
+import 'package:comic_book_explorer/utils/utils.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:flutter/material.dart';
 

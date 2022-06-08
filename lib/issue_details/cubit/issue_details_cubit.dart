@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:comic_book_explorer/utils/comic_vine_id_from_string_url.dart';
+import 'package:comic_book_explorer/utils/utils.dart';
 import 'package:comic_vine_api/comic_vine_api.dart';
 import 'package:equatable/equatable.dart';
 
