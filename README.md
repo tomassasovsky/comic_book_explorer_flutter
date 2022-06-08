@@ -12,6 +12,9 @@ A Flutter App that consumes the restful API of Comic Vine, the largest comic dat
 
 ## Getting Started 🚀
 
+First, you're gonna need to generate an API Key for the Comic Vine API. You can get it from [here](https://comicvine.gamespot.com/api/)
+After that, you're gonna want to place it in the launch files. Keep in mind:
+
 This project contains 3 flavors:
 
 - development
