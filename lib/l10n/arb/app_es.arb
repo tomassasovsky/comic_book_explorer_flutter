@@ -1,7 +1,19 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+    "latestIssuesTitle": "Últimas Publicaciones",
+    "@latestIssuesTitle": {
+        "description": "El título de la página de últimas publicaciones"
+    },
+    "listViewType": "Lista",
+    "@listViewType": {
+        "description": "El tipo de vista a usar para la lista de publicaciones"
+    },
+    "gridViewType": "Cuadrilla",
+    "@gridViewType": {
+        "description": "El tipo de vista a usar para la lista de publicaciones"
+    },
+    "failedToFetchIssues": "No se pudieron obtener las publicaciones",
+    "@failedToFetchIssues": {
+        "description": "Texto que se muestra cuando no se pudieron obtener las publicaciones"
     }
 }

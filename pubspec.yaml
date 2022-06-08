@@ -8,11 +8,18 @@ environment:
 
 dependencies:
   bloc: ^8.0.3
+  comic_vine_api:
+    path: packages/comic_vine_api
+  dotenv: ^4.0.1
+  env_flutter: ^0.1.4
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  go_router: ^3.1.1
+  http: ^0.13.4
   intl: ^0.17.0
 
 dev_dependencies:
@@ -21,6 +28,9 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^0.3.0
   very_good_analysis: ^3.0.0
+
+assets:
+  - .env
 
 flutter:
   uses-material-design: true
