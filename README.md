@@ -38,6 +38,9 @@ _\*Comic Book Explorer works on iOS, Android, Web, and Windows._
 
 ---
 
+## Known issues
+ - CORS policies are not implemented in the Comic Vine RestAPI, causing the requests to not work on Flutter Web. A workaround would be to use a so called `CORS ANYWHERE PROXY` - one implementation of this can be found [here](https://cors-anywhere.herokuapp.com). 
+
 ## Running Tests 🧪
 
 To run all unit and widget tests use the following command:
